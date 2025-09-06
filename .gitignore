@@ -15,3 +15,40 @@ buildNumber.properties
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# Build files
+/target/
+/build/
+
+# IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+.sts4-cache/
+.vscode/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Output
+/bin/
+/out/
+
+# Credentials (important!)
+src/main/resources/application.properties
+src/main/resources/application.yml
+
+# Backup files
+*.swp
+*.bak
+*.tmp
