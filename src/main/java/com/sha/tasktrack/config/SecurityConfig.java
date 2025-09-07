@@ -31,7 +31,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()) // disable CSRF for Postman testing
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/register", "/api/auth/login").permitAll().anyRequest().authenticated()).formLogin(Customizer.withDefaults()) // enable default login form (optional)
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/register", "/api/auth/login",  "/api/assist/public/**" ).permitAll().anyRequest().authenticated()).formLogin(Customizer.withDefaults()) // enable default login form (optional)
                 .httpBasic(Customizer.withDefaults()); // allow basic auth (optional for testing)
         return http.build();
     }
