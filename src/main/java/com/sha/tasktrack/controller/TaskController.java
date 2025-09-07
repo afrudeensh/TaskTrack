@@ -26,16 +26,13 @@ public class TaskController {
     private final UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<TaskDto> create(@RequestBody TaskDto dto,
-                                          @AuthenticationPrincipal UserDetails userDetails) {
-        User user = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public ResponseEntity<TaskDto> create(@RequestBody TaskDto dto, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("User not found"));
         return ResponseEntity.ok(taskService.create(dto, user.getId()));
     }
 
     @GetMapping
-    public ResponseEntity<Page<TaskDto>> list(@RequestParam(defaultValue = "0") int page,
-                                              @RequestParam(defaultValue = "5") int size) {
+    public ResponseEntity<Page<TaskDto>> list(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(taskService.list(pageable));
     }
@@ -50,26 +47,19 @@ public class TaskController {
 
 
     @GetMapping("/search")
-    public ResponseEntity<Page<TaskDto>> search(@RequestParam String title,
-                                                @RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "5") int size) {
+    public ResponseEntity<Page<TaskDto>> search(@RequestParam String title, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         return ResponseEntity.ok(taskService.searchByTitle(title, PageRequest.of(page, size)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaskDto> update(@PathVariable Long id,
-                                          @RequestBody TaskDto dto,
-                                          @AuthenticationPrincipal UserDetails userDetails) {
-        User user = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public ResponseEntity<TaskDto> update(@PathVariable Long id, @RequestBody TaskDto dto, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("User not found"));
         return ResponseEntity.ok(taskService.update(id, dto, user.getId()));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id,
-                                       @AuthenticationPrincipal UserDetails userDetails) {
-        User user = userRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public ResponseEntity<Void> delete(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new RuntimeException("User not found"));
         taskService.delete(id, user.getId());
         return ResponseEntity.noContent().build();
     }
